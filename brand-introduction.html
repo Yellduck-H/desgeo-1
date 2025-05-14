@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画法几何品牌介绍 - 智能鱼缸领导者</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-primary': '#202020',
+                        'brand-secondary': '#3A3A3A',
+                        'brand-light': '#707070',
+                        'brand-dark': '#101010',
+                        'tech-gray': '#202020',
+                        'tech-light': '#404040',
+                        'tech-accent': '#A0A0A0',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 定义品牌颜色 */
+        :root {
+            --brand-primary: #202020;
+            --brand-secondary: #3A3A3A;
+            --brand-light: #707070;
+            --brand-dark: #101010;
+            --tech-gray: #202020;
+            --tech-light: #404040;
+            --tech-accent: #A0A0A0;
+        }
+        
+        /* 自定义样式 */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        
+        .text-brand-primary {
+            color: var(--brand-primary);
+        }
+        
+        .bg-brand-primary {
+            background-color: var(--brand-primary);
+        }
+        
+        .from-brand-primary {
+            --tw-gradient-from: var(--brand-primary);
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(0, 0, 0, 0));
+        }
+        
+        .to-brand-secondary {
+            --tw-gradient-to: var(--brand-secondary);
+        }
+        
+        .bg-tech-gray {
+            background-color: var(--tech-gray);
+        }
+        
+        .bg-tech-light {
+            background-color: var(--tech-light);
+        }
+        
+        .hover\:bg-tech-light:hover {
+            background-color: var(--tech-light);
+        }
+        
+        /* 现代导航样式 */
+        .modern-nav {
+            background: #FFFFFF;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* 占位图样式 */
+        .placeholder-image {
+            background: linear-gradient(135deg, #f5f5f5 25%, #e0e0e0 25%, #e0e0e0 50%, #f5f5f5 50%, #f5f5f5 75%, #e0e0e0 75%, #e0e0e0 100%);
+            background-size: 20px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: bold;
+        }
+        
+        /* 全局移除下划线样式 - 增强版 */
+        * {
+            text-decoration: none !important;
+            border-bottom: none !important;
+        }
+        
+        /* 特定元素下划线移除 */
+        a, p, span, h1, h2, h3, h4, h5, h6, li, div, header, footer, nav, section, article, aside {
+            text-decoration: none !important;
+            border-bottom: none !important;
+            text-underline-offset: 0 !important;
+            text-decoration-line: none !important;
+            text-decoration-style: none !important;
+            text-decoration-thickness: 0 !important;
+        }
+        
+        /* 移除hover状态下可能出现的下划线 */
+        a:hover, a:focus, a:active,
+        .group:hover a, .group:hover span, 
+        .group:focus a, .group:active a,
+        button:hover, button:focus, button:active {
+            text-decoration: none !important;
+            border-bottom: none !important;
+            text-underline-offset: 0 !important;
+            text-decoration-line: none !important;
+            text-decoration-style: none !important;
+            text-decoration-thickness: 0 !important;
+        }
+        
+        /* 移除标题下方可能的装饰线 */
+        h1::after, h2::after, h3::after, h4::after, h5::after, h6::after {
+            display: none !important;
+        }
+        
+        /* 修复特定的下拉菜单边框问题，仅保留必要边框 */
+        .border-b.border-gray-100 {
+            border-bottom: none !important;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-white">
+    <!-- 导航栏 -->
+    <nav class="modern-nav fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="block h-10">
+                            <img src="assets/logo.png" alt="画法几何" class="h-full w-auto">
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="hidden md:flex md:items-center md:space-x-6">
+                        <a href="index.html" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group">
+                            首页
+                        </a>
+                        
+                        <!-- 关于我们 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="brand-introduction.html" class="text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                关于我们
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 backdrop-blur-lg bg-white/90 border border-gray-100 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="brand-introduction.html" class="block px-4 py-2 text-sm text-brand-primary font-medium border-l-2 border-brand-primary bg-gray-50">品牌介绍</a>
+                                <a href="brand-strategy.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">品牌战略</a>
+                                <a href="milestones.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">大事件</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品中心 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="products.html" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                产品中心
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 backdrop-blur-lg bg-white/90 border border-gray-100 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="products.html#c-series" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">C系智能鱼缸</a>
+                                <a href="products.html#s-series" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">S系智能鱼缸</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 新闻动态 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="#" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                新闻动态
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 backdrop-blur-lg bg-white/90 border border-gray-100 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">品牌资讯</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">行业新闻</a>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group">联系我们
+                        </a>
+                        
+                        <!-- 加入我们 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="#" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                加入我们
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 backdrop-blur-lg bg-white/90 border border-gray-100 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">经销商招募</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">人才招聘</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 语言切换功能 -->
+                    <div class="hidden md:flex items-center ml-4 pl-4 border-l border-gray-200">
+                        <div class="relative group">
+                            <button class="flex items-center text-sm text-gray-700 hover:text-brand-primary focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                                </svg>
+                                <span>中文</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-24 backdrop-blur-lg bg-white/90 border border-gray-100 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                                <a href="#" class="block px-4 py-2 text-sm text-brand-primary hover:bg-gray-50 font-medium border-l-2 border-brand-primary">中文</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">English</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 移动端菜单按钮 -->
+                    <div class="flex md:hidden items-center ml-4">
+                        <button type="button" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 内容调整：为了配合固定导航栏，添加顶部间距 -->
+    <div class="pt-16"></div>
+    
+    <!-- 面包屑导航 - 全新设计 -->
+    <div class="bg-white py-3 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex items-center text-sm">
+                <a href="index.html" class="text-gray-600 hover:text-brand-primary transition-all duration-300 flex items-center group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    首页
+                </a>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+                
+                <a href="brand-introduction.html" class="text-gray-600 hover:text-brand-primary transition-all duration-300 flex items-center relative group">
+                    <span>关于我们</span>
+                </a>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+                
+                <span class="text-brand-primary font-medium flex items-center">
+                    <span class="relative">
+                        品牌介绍
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要内容 -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- 标题 -->
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">画法几何品牌介绍</h1>
+                <div class="w-24 h-1 bg-gradient-to-r from-brand-primary to-brand-secondary mx-auto" style="display:none;"></div>
+            </div>
+
+            <!-- 品牌简介 -->
+            <div class="mb-16">
+                <div class="flex flex-col md:flex-row items-center gap-10 mb-12">
+                    <div class="md:w-1/2">
+                        <div class="relative group perspective-1000">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-brand-primary/20 to-brand-secondary/10 rounded-2xl transform -rotate-2 shadow-lg group-hover:shadow-xl transition-all duration-500"></div>
+                            <!-- 替换为本地图片或使用占位图 -->
+                            <div class="relative z-10 rounded-2xl shadow-md w-full h-80 placeholder-image transform rotate-1 group-hover:rotate-0 transition-all duration-700">
+                                <span>品牌形象图</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">画法几何</h2>
+                        <div class="w-16 h-0.5 bg-brand-primary mb-6" style="display:none;"></div>
+                        <p class="text-gray-700 leading-relaxed mb-6">
+                            画法几何成立于2018年底，是一家专注于智能鱼缸研发与生产的科技企业。品牌依托创新的研发能力和对用户体验的深刻理解，打造出了全球首款量产的智能鱼缸系列产品，为水族爱好者带来了前所未有的养鱼体验。
+                        </p>
+                        <p class="text-gray-700 leading-relaxed mb-6">
+                            画法几何倡导"让养鱼更简单"的理念，通过智能化、自动化的方式，解决了传统养鱼过程中的换水困难、水质监测繁琐等痛点问题，让更多人能够轻松享受养鱼的乐趣。
+                        </p>
+                        <p class="text-gray-700 leading-relaxed">
+                            依托强大的研发团队和完善的供应链体系，画法几何已成为智能鱼缸领域的领导者，产品远销全球多个国家和地区，获得了众多用户和行业专家的高度认可。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 品牌理念 - 统一设计 -->
+            <div class="py-16 bg-white relative mb-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <!-- 标题区域 -->
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">品牌理念</h2>
+                        <div class="w-24 h-1 bg-gradient-to-r from-brand-primary to-brand-secondary mx-auto" style="display:none;"></div>
+                    </div>
+                    
+                    <!-- 卡片容器 -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                        <!-- 新 -->
+                        <div class="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-500 relative border border-gray-100">
+                            <div class="p-8 relative">
+                                <!-- 大字标题 -->
+                                <div class="text-center mb-6">
+                                    <span class="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-brand-primary to-brand-secondary inline-block">新</span>
+                                </div>
+                                
+                                <!-- 标题 -->
+                                <h3 class="text-xl font-bold text-center text-gray-900 mb-4">智能养鱼的新时代</h3>
+                                
+                                <!-- 分隔线 -->
+                                <div class="w-12 h-0.5 bg-gradient-to-r from-brand-primary to-brand-secondary mx-auto mb-4" style="display:none;"></div>
+                                
+                                <!-- 描述 -->
+                                <p class="text-gray-600 text-center">
+                                    开创了智能养鱼新方式，带来了全新的用户体验。让养鱼变得简单、有趣且充满科技感。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- 心 -->
+                        <div class="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-500 relative border border-gray-100">
+                            <div class="p-8 relative">
+                                <!-- 大字标题 -->
+                                <div class="text-center mb-6">
+                                    <span class="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-brand-primary to-brand-secondary inline-block">心</span>
+                                </div>
+                                
+                                <!-- 标题 -->
+                                <h3 class="text-xl font-bold text-center text-gray-900 mb-4">安心、放心、省心</h3>
+                                
+                                <!-- 分隔线 -->
+                                <div class="w-12 h-0.5 bg-gradient-to-r from-brand-primary to-brand-secondary mx-auto mb-4" style="display:none;"></div>
+                                
+                                <!-- 描述 -->
+                                <p class="text-gray-600 text-center">
+                                    用户使用安心、放心、省心。让每一位用户都能享受到高品质的养鱼体验，没有后顾之忧。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- 芯 -->
+                        <div class="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-500 relative border border-gray-100">
+                            <div class="p-8 relative">
+                                <!-- 大字标题 -->
+                                <div class="text-center mb-6">
+                                    <span class="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-brand-primary to-brand-secondary inline-block">芯</span>
+                                </div>
+                                
+                                <!-- 标题 -->
+                                <h3 class="text-xl font-bold text-center text-gray-900 mb-4">鱼缸之"芯"</h3>
+                                
+                                <!-- 分隔线 -->
+                                <div class="w-12 h-0.5 bg-gradient-to-r from-brand-primary to-brand-secondary mx-auto mb-4" style="display:none;"></div>
+                                
+                                <!-- 描述 -->
+                                <p class="text-gray-600 text-center">
+                                    以科技创新为驱动，打造鱼缸之"芯"，让鱼缸拥有自己的"芯"脏，实现智能化养鱼体验。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 品牌愿景 -->
+            <div class="mb-16">
+                <div class="flex flex-col-reverse md:flex-row items-center gap-10">
+                    <div class="md:w-1/2">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">品牌愿景</h2>
+                        <div class="w-16 h-0.5 bg-brand-primary mb-6" style="display:none;"></div>
+                        <p class="text-gray-700 leading-relaxed mb-6">
+                            画法几何以设计洞见未来，塑造年轻之选；以中式待客之道，感知用户情感；以创新实力领航未来，坚定前行所向，以前行眼界，开创新的世界。2020年9月启用新的slogan"芯"智能鱼缸。同时提出了三"新、心、芯"理念。
+                        </p>
+                        <p class="text-xl md:text-2xl font-bold text-gray-900 mb-4">
+                            让每一个人都能享受智能科技带来的乐趣
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="relative group perspective-1000">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-brand-primary/20 to-brand-secondary/10 rounded-2xl transform -rotate-2 shadow-lg group-hover:shadow-xl transition-all duration-500"></div>
+                            <!-- 替换为本地图片或使用占位图 -->
+                            <div class="relative z-10 rounded-2xl shadow-md w-full h-80 placeholder-image transform rotate-1 group-hover:rotate-0 transition-all duration-700">
+                                <span>品牌愿景图</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 联系信息 -->
+            <div class="bg-gray-50 rounded-3xl p-8 text-center">
+                <p class="text-gray-700 mb-4">如需获取关于产品、销售、专业建议等帮助，请联系各大平台在线客服或致电贵宾专线：</p>
+                <p class="text-xl font-bold text-brand-primary mb-2">400-882-8957</p>
+                <div class="flex justify-center space-x-4 mt-4">
+                    <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full bg-tech-gray text-white hover:bg-tech-light transition-colors duration-300">
+                        <i class="fab fa-weixin"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full bg-tech-gray text-white hover:bg-tech-light transition-colors duration-300">
+                        <i class="fab fa-weibo"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 Footer -->
+    <footer class="bg-tech-gray text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- 页脚主体内容 -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <!-- 关于我们栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">关于我们</h3>
+                    <ul class="space-y-2">
+                        <li><a href="brand-introduction.html" class="text-white transition-colors duration-200">品牌介绍</a></li>
+                        <li><a href="brand-strategy.html" class="text-gray-300 hover:text-white transition-colors duration-200">品牌战略</a></li>
+                        <li><a href="milestones.html" class="text-gray-300 hover:text-white transition-colors duration-200">大事件</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 产品中心栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">产品中心</h3>
+                    <ul class="space-y-2">
+                        <li><a href="products.html" class="text-gray-300 hover:text-white transition-colors duration-200">C系智能鱼缸</a></li>
+                        <li><a href="products.html#s-series" class="text-gray-300 hover:text-white transition-colors duration-200">S系智能鱼缸</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 新闻动态栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">新闻动态</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">品牌资讯</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">行业新闻</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 加入我们栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">加入我们</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">经销商招募</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">人才招聘</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 二维码区域 -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold mb-4">关注我们</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- 微信公众号 -->
+                        <div class="text-center">
+                            <div class="p-2 bg-white rounded-md inline-block mb-2">
+                                <!-- 替换为本地图片或使用占位图 -->
+                                <div class="w-24 h-24 placeholder-image text-xs">
+                                    <span>微信二维码</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400">微信公众号</p>
+                        </div>
+                        
+                        <!-- 官方微博 -->
+                        <div class="text-center">
+                            <div class="p-2 bg-white rounded-md inline-block mb-2">
+                                <!-- 替换为本地图片或使用占位图 -->
+                                <div class="w-24 h-24 placeholder-image text-xs">
+                                    <span>微博二维码</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400">官方微博</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 版权信息 -->
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center">
+                <div class="text-gray-400 text-sm">
+                    版权所有：北京元苡佰科技有限责任公司 Copyright © 2023 desgeo.com All Rights Reserved. 京ICP备15055609号-4
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 返回顶部按钮 -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <a href="#" class="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-lg text-tech-gray hover:text-tech-light transition-colors duration-200">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+</body>
+</html>
+ 
+ 

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大事件 - 画法几何</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-primary': '#202020',
+                        'brand-secondary': '#3A3A3A',
+                        'brand-light': '#707070',
+                        'brand-dark': '#101010',
+                        'tech-gray': '#202020',
+                        'tech-light': '#404040',
+                        'tech-accent': '#A0A0A0',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 定义品牌颜色 */
+        :root {
+            --brand-primary: #202020;
+            --brand-secondary: #3A3A3A;
+            --brand-light: #707070;
+            --brand-dark: #101010;
+            --tech-gray: #202020;
+            --tech-light: #404040;
+            --tech-accent: #A0A0A0;
+        }
+        
+        /* 自定义样式 */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        
+        .text-brand-primary {
+            color: var(--brand-primary);
+        }
+        
+        .bg-brand-primary {
+            background-color: var(--brand-primary);
+        }
+        
+        .from-brand-primary {
+            --tw-gradient-from: var(--brand-primary);
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(0, 0, 0, 0));
+        }
+        
+        .to-brand-secondary {
+            --tw-gradient-to: var(--brand-secondary);
+        }
+        
+        .bg-tech-gray {
+            background-color: var(--tech-gray);
+        }
+        
+        .bg-tech-light {
+            background-color: var(--tech-light);
+        }
+        
+        .hover\:bg-tech-light:hover {
+            background-color: var(--tech-light);
+        }
+        
+        /* 全局移除下划线样式 - 增强版 */
+        * {
+            text-decoration: none !important;
+            border-bottom: none !important;
+        }
+        
+        /* 特定元素下划线移除 */
+        a, p, span, h1, h2, h3, h4, h5, h6, li, div, header, footer, nav, section, article, aside {
+            text-decoration: none !important;
+            border-bottom: none !important;
+            text-underline-offset: 0 !important;
+            text-decoration-line: none !important;
+            text-decoration-style: none !important;
+            text-decoration-thickness: 0 !important;
+        }
+        
+        /* 移除hover状态下可能出现的下划线 */
+        a:hover, a:focus, a:active,
+        .group:hover a, .group:hover span, 
+        .group:focus a, .group:active a,
+        button:hover, button:focus, button:active {
+            text-decoration: none !important;
+            border-bottom: none !important;
+            text-underline-offset: 0 !important;
+            text-decoration-line: none !important;
+            text-decoration-style: none !important;
+            text-decoration-thickness: 0 !important;
+        }
+        
+        /* 移除标题下方可能的装饰线 */
+        h1::after, h2::after, h3::after, h4::after, h5::after, h6::after {
+            display: none !important;
+        }
+        
+        /* 修复特定的下拉菜单边框问题，仅保留必要边框 */
+        .border-b.border-gray-100 {
+            border-bottom: none !important;
+        }
+        
+        /* 现代导航样式 */
+        .modern-nav {
+            background: #FFFFFF;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* 占位图样式 */
+        .placeholder-image {
+            background: linear-gradient(135deg, #f5f5f5 25%, #e0e0e0 25%, #e0e0e0 50%, #f5f5f5 50%, #f5f5f5 75%, #e0e0e0 75%, #e0e0e0 100%);
+            background-size: 20px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: bold;
+        }
+        
+        /* 现代科技感时间线 */
+        .tech-timeline {
+            --line-color: rgba(0, 0, 0, 0.1);
+            --dot-color: #202020;
+            --dot-border: rgba(32, 32, 32, 0.2);
+            position: relative;
+        }
+        
+        .tech-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: var(--line-color);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 6rem;
+            width: 100%;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            padding-right: calc(50% + 2rem);
+            text-align: right;
+        }
+        
+        .timeline-item:nth-child(even) {
+            padding-left: calc(50% + 2rem);
+            margin-top: -2rem;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 1rem;
+            left: 50%;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: var(--dot-color);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 0 4px var(--dot-border);
+        }
+        
+        .timeline-card {
+            position: relative;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            width: 1.5rem;
+            height: 1px;
+            background: var(--line-color);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-card::before {
+            right: -1.5rem;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-card::before {
+            left: -1.5rem;
+        }
+        
+        /* 科技感背景 */
+        .tech-bg {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,245,245,0.95) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(32, 32, 32, 0.03) 0%, transparent 8%), 
+                radial-gradient(circle at 80% 70%, rgba(32, 32, 32, 0.03) 0%, transparent 8%);
+            background-size: 80px 80px;
+            z-index: -1;
+        }
+        
+        /* 年份标签 */
+        .year-label {
+            display: inline-block;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            background: linear-gradient(135deg, #202020 0%, #3A3A3A 100%);
+            color: white;
+            padding: 0.35rem 1.25rem;
+            border-radius: 3rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-white">
+    <!-- 导航栏 -->
+    <nav class="modern-nav fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="block h-10">
+                            <img src="assets/logo.png" alt="画法几何" class="h-full w-auto">
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="hidden md:flex md:items-center md:space-x-6">
+                        <a href="index.html" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group">
+                            首页
+                        </a>
+                        
+                        <!-- 关于我们 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="brand-introduction.html" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                关于我们
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 backdrop-blur-lg bg-white/90 border border-gray-100 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="brand-introduction.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">品牌介绍</a>
+                                <a href="brand-strategy.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">品牌战略</a>
+                                <a href="milestones.html" class="block px-4 py-2 text-sm text-brand-primary font-medium border-l-2 border-brand-primary bg-gray-50">大事件</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品中心 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="products.html" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                产品中心
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 backdrop-blur-lg bg-white/90 border border-gray-100 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="products.html#c-series" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">C系智能鱼缸</a>
+                                <a href="products.html#s-series" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">S系智能鱼缸</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 新闻动态 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="#" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                新闻动态
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 backdrop-blur-lg bg-white/90 border border-gray-100 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">品牌资讯</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">行业新闻</a>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group">联系我们
+                        </a>
+                        
+                        <!-- 加入我们 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="#" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                加入我们
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 backdrop-blur-lg bg-white/90 border border-gray-100 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">经销商招募</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">人才招聘</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 语言切换功能 -->
+                    <div class="hidden md:flex items-center ml-4 pl-4 border-l border-gray-200">
+                        <div class="relative group">
+                            <button class="flex items-center text-sm text-gray-700 hover:text-brand-primary focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                                </svg>
+                                <span>中文</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-24 backdrop-blur-lg bg-white/90 border border-gray-100 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                                <a href="#" class="block px-4 py-2 text-sm text-brand-primary hover:bg-gray-50 font-medium border-l-2 border-brand-primary">中文</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">English</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 移动端菜单按钮 -->
+                    <div class="flex md:hidden items-center ml-4">
+                        <button type="button" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 内容调整：为了配合固定导航栏，添加顶部间距 -->
+    <div class="pt-16"></div>
+    
+    <!-- 面包屑导航 -->
+    <div class="bg-white py-3 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex items-center text-sm">
+                <a href="index.html" class="text-gray-600 hover:text-brand-primary transition-all duration-300 flex items-center group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    首页
+                </a>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+                
+                <a href="brand-introduction.html" class="text-gray-600 hover:text-brand-primary transition-all duration-300 flex items-center relative group">
+                    <span>关于我们</span>
+                </a>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+                
+                <span class="text-brand-primary font-medium flex items-center">
+                    <span class="relative">
+                        大事件
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面标题 Hero Section -->
+    <section class="bg-white pt-28 pb-20 md:pt-40 md:pb-28 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-secondary">创新历程</h1>
+                <p class="mt-4 text-xl text-gray-600 font-light">跟随画法几何的发展脚步，见证品牌的每一个重要时刻</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 大事件时间线部分 -->
+    <section class="py-20 tech-bg overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="tech-timeline">
+                <!-- 2020年11月 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                        <div class="mb-3">
+                            <div class="year-label">2020年11月</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-primary mb-3">国际宠物水族展赞助商</h3>
+                        <p class="text-gray-600">画法几何成为二十四届中国国际宠物水族展览会赞助商</p>
+                    </div>
+                </div>
+
+                <!-- 2020年9月 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                        <div class="mb-3">
+                            <div class="year-label">2020年9月</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-primary mb-3">全球销售突破20万台</h3>
+                        <p class="text-gray-600">画法几何全系产品累计销售20万台，遍布27个国家</p>
+                    </div>
+                </div>
+
+                <!-- 2020年8月 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                        <div class="mb-3">
+                            <div class="year-label">2020年8月</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-primary mb-3">小米众筹突破400万</h3>
+                        <p class="text-gray-600">画法几何C系智能鱼缸C180 Pro登陆小米众筹众筹14天，金额突破400万，支持人数26000+</p>
+                    </div>
+                </div>
+
+                <!-- 2020年4月 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                        <div class="mb-3">
+                            <div class="year-label">2020年4月</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-primary mb-3">完成千万元融资</h3>
+                        <p class="text-gray-600">画法几何完成千万元首轮Pre-A轮融资</p>
+                    </div>
+                </div>
+
+                <!-- 2019年11月12日 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                        <div class="mb-3">
+                            <div class="year-label">2019年11月12日</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-primary mb-3">首款智能鱼缸众筹成功</h3>
+                        <p class="text-gray-600">画法几何四代鱼缸登陆小米有品众筹(国内首款智能鱼缸)众筹14天，金额突破800万，完成率超2700%</p>
+                    </div>
+                </div>
+
+                <!-- 2019年10月18日 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                        <div class="mb-3">
+                            <div class="year-label">2019年10月18日</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-primary mb-3">迷你桌面鱼缸上线</h3>
+                        <p class="text-gray-600">画法几何迷你桌面鱼缸登陆小米有品"星品驾到"</p>
+                    </div>
+                </div>
+
+                <!-- 2019年6月 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                        <div class="mb-3">
+                            <div class="year-label">2019年6月</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-primary mb-3">小米有品与京东双平台首发</h3>
+                        <p class="text-gray-600">画法几何二代观景鱼缸登陆小米有品首发同年6月登陆"京东自营"</p>
+                    </div>
+                </div>
+
+                <!-- 2019年1月 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                        <div class="mb-3">
+                            <div class="year-label">2019年1月</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-primary mb-3">入驻小米有品</h3>
+                        <p class="text-gray-600">画法几何一代鱼缸正式入驻小米有品</p>
+                    </div>
+                </div>
+
+                <!-- 2018年底 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                        <div class="mb-3">
+                            <div class="year-label">2018年底</div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-primary mb-3">品牌创立</h3>
+                        <p class="text-gray-600">创立"画法几何"品牌</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 现代科技感页脚 -->
+    <footer class="bg-tech-gray text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- 页脚主体内容 -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <!-- 关于我们栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">关于我们</h3>
+                    <ul class="space-y-2">
+                        <li><a href="brand-introduction.html" class="text-gray-300 hover:text-white transition-colors duration-200">品牌介绍</a></li>
+                        <li><a href="brand-strategy.html" class="text-gray-300 hover:text-white transition-colors duration-200">品牌战略</a></li>
+                        <li><a href="milestones.html" class="text-white transition-colors duration-200">大事件</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 产品中心栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">产品中心</h3>
+                    <ul class="space-y-2">
+                        <li><a href="products.html" class="text-gray-300 hover:text-white transition-colors duration-200">C系智能鱼缸</a></li>
+                        <li><a href="products.html#s-series" class="text-gray-300 hover:text-white transition-colors duration-200">S系智能鱼缸</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 新闻动态栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">新闻动态</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">品牌资讯</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">行业新闻</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 加入我们栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">加入我们</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">经销商招募</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">人才招聘</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 二维码区域 -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold mb-4">关注我们</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- 微信公众号 -->
+                        <div class="text-center">
+                            <div class="p-2 bg-white rounded-md inline-block mb-2">
+                                <!-- 替换为本地图片或使用占位图 -->
+                                <div class="w-24 h-24 placeholder-image text-xs">
+                                    <span>微信二维码</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400">微信公众号</p>
+                        </div>
+                        
+                        <!-- 官方微博 -->
+                        <div class="text-center">
+                            <div class="p-2 bg-white rounded-md inline-block mb-2">
+                                <!-- 替换为本地图片或使用占位图 -->
+                                <div class="w-24 h-24 placeholder-image text-xs">
+                                    <span>微博二维码</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400">官方微博</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 版权信息 -->
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center">
+                <div class="text-gray-400 text-sm">
+                    版权所有：北京元苡佰科技有限责任公司 Copyright © 2023 desgeo.com All Rights Reserved. 京ICP备15055609号-4
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 返回顶部按钮 - 现代科技感设计 -->
+    <div class="fixed bottom-8 right-8 z-50 transform translate-y-20 opacity-0 invisible transition-all duration-500" id="backToTop">
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-lg text-brand-primary border border-gray-200 hover:bg-brand-primary hover:text-white hover:border-transparent transition-all duration-300 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:-translate-y-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+        </button>
+    </div>
+    
+    <!-- 控制滚动显示返回顶部按钮 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 500) {
+                    backToTopButton.classList.remove('translate-y-20', 'opacity-0', 'invisible');
+                    backToTopButton.classList.add('translate-y-0', 'opacity-100', 'visible');
+                } else {
+                    backToTopButton.classList.add('translate-y-20', 'opacity-0', 'invisible');
+                    backToTopButton.classList.remove('translate-y-0', 'opacity-100', 'visible');
+                }
+            });
+            
+            // 检查初始滚动位置
+            if (window.pageYOffset > 500) {
+                backToTopButton.classList.remove('translate-y-20', 'opacity-0', 'invisible');
+                backToTopButton.classList.add('translate-y-0', 'opacity-100', 'visible');
+            }
+        });
+    </script>
+</body>
+</html>

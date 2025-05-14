@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画法几何品牌战略 - 从中国赛场到世界赛场</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-primary': '#202020',
+                        'brand-secondary': '#3A3A3A',
+                        'brand-light': '#707070',
+                        'brand-dark': '#101010',
+                        'tech-gray': '#202020',
+                        'tech-light': '#404040',
+                        'tech-accent': '#A0A0A0',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 定义品牌颜色 */
+        :root {
+            --brand-primary: #202020;
+            --brand-secondary: #3A3A3A;
+            --brand-light: #707070;
+            --brand-dark: #101010;
+            --tech-gray: #202020;
+            --tech-light: #404040;
+            --tech-accent: #A0A0A0;
+        }
+        
+        /* 自定义样式 */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        
+        .text-brand-primary {
+            color: var(--brand-primary);
+        }
+        
+        .bg-brand-primary {
+            background-color: var(--brand-primary);
+        }
+        
+        .from-brand-primary {
+            --tw-gradient-from: var(--brand-primary);
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(0, 0, 0, 0));
+        }
+        
+        .to-brand-secondary {
+            --tw-gradient-to: var(--brand-secondary);
+        }
+        
+        .bg-tech-gray {
+            background-color: var(--tech-gray);
+        }
+        
+        .bg-tech-light {
+            background-color: var(--tech-light);
+        }
+        
+        .hover\:bg-tech-light:hover {
+            background-color: var(--tech-light);
+        }
+        
+        /* 现代导航样式 */
+        .modern-nav {
+            background: rgba(255, 255, 255, 1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* 占位图样式 */
+        .placeholder-image {
+            background: linear-gradient(135deg, #f5f5f5 25%, #e0e0e0 25%, #e0e0e0 50%, #f5f5f5 50%, #f5f5f5 75%, #e0e0e0 75%, #e0e0e0 100%);
+            background-size: 20px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: bold;
+        }
+        
+        /* 全局移除下划线样式 */
+        a, p, span, h1, h2, h3, h4, h5, h6, li, div {
+            text-decoration: none !important;
+            border-bottom: none !important;
+        }
+        
+        /* 移除hover状态下可能出现的下划线 */
+        a:hover, .group:hover a, .group:hover span {
+            text-decoration: none !important;
+            border-bottom: none !important;
+        }
+        
+        /* 修复特定的下拉菜单边框问题，仅保留必要边框 */
+        .border-b.border-gray-100 {
+            border-bottom: none !important;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-gray-100">
+    <!-- 导航栏 -->
+    <nav class="modern-nav fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="block h-10">
+                            <img src="assets/logo.png" alt="画法几何" class="h-full w-auto">
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="hidden md:flex md:items-center md:space-x-6">
+                        <a href="index.html" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group">首页</a>
+                        
+                        <!-- 关于我们 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="brand-introduction.html" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                关于我们
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 bg-white border border-gray-100 shadow-md rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="brand-introduction.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">品牌介绍</a>
+                                <a href="brand-strategy.html" class="block px-4 py-2 text-sm text-brand-primary bg-gray-50 hover:bg-gray-100 border-l-2 border-brand-primary">品牌战略</a>
+                                <a href="milestones.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">大事件</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品中心 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="products.html" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                产品中心
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 bg-white border border-gray-100 shadow-md rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="products.html#c-series" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">C系智能鱼缸</a>
+                                <a href="products.html#s-series" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">S系智能鱼缸</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 新闻动态 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="#" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                新闻动态
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 bg-white border border-gray-100 shadow-md rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">品牌资讯</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">行业新闻</a>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group">联系我们</a>
+                        
+                        <!-- 加入我们 下拉菜单 -->
+                        <div class="relative group">
+                            <a href="#" class="text-gray-700 hover:text-brand-primary px-3 py-2 text-sm font-medium transition-all duration-300 relative group inline-flex items-center">
+                                加入我们
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </a>
+                            <!-- 下拉菜单内容 -->
+                            <div class="absolute left-0 mt-0 w-40 bg-white border border-gray-100 shadow-md rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">经销商招募</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">人才招聘</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 语言切换功能 -->
+                    <div class="hidden md:flex items-center ml-4 pl-4 border-l border-gray-200">
+                        <div class="relative group">
+                            <button class="flex items-center text-sm text-gray-700 hover:text-brand-primary focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                                </svg>
+                                <span>中文</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-24 bg-white border border-gray-100 shadow-md rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                                <a href="#" class="block px-4 py-2 text-sm text-brand-primary hover:bg-gray-50 font-medium border-l-2 border-brand-primary">中文</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-primary hover:border-l-2 hover:border-brand-primary transition-all duration-200">English</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 移动端菜单按钮 -->
+                    <div class="flex md:hidden items-center ml-4">
+                        <button type="button" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 内容调整：为了配合固定导航栏，添加顶部间距 -->
+    <div class="pt-16"></div>
+    
+    <!-- 面包屑导航 - 全新设计 -->
+    <div class="bg-white py-3 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex items-center text-sm">
+                <a href="index.html" class="text-gray-600 hover:text-brand-primary transition-all duration-300 flex items-center group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    首页
+                </a>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+                
+                <a href="brand-introduction.html" class="text-gray-600 hover:text-brand-primary transition-all duration-300 flex items-center relative group">
+                    <span>关于我们</span>
+                </a>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+                
+                <span class="text-brand-primary font-medium flex items-center">
+                    <span class="relative">
+                        品牌战略
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要内容 -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- 标题区域 - 全新设计 -->
+            <div class="relative mb-20">
+                <!-- 背景装饰 -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-primary/5 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-brand-secondary/5 rounded-full blur-2xl"></div>
+                
+                <!-- 标题内容 -->
+                <div class="relative z-10 text-center">
+                    <h1 class="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-secondary inline-block mb-4">从中国赛场到世界赛场</h1>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        画法几何全球化战略愿景，打造世界级领先的智能鱼缸品牌
+                    </p>
+                </div>
+            </div>
+
+            <!-- 全球领先的智能鱼缸品牌 -->
+            <div class="rounded-3xl bg-gradient-to-br from-gray-50 to-gray-100 p-8 md:p-12 relative mb-20 shadow-lg">
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-primary/5 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-brand-secondary/5 rounded-full blur-2xl"></div>
+                
+                <div class="relative z-10">
+                    <div class="flex flex-col md:flex-row items-center gap-12">
+                        <div class="md:w-2/5 order-2 md:order-1">
+                            <h2 class="text-3xl font-bold text-gray-900 mb-6 relative inline-block">
+                                全球领先的智能鱼缸品牌
+                            </h2>
+                            <div class="space-y-4">
+                                <p class="text-gray-700 leading-relaxed">
+                                    画法几何的目标是成为世界级领先的智能鱼缸品牌、成为中国鱼缸智造的标杆品牌。短短的一年时间，画法几何品牌已经从智能鱼缸开创者向领导者迸发。自诞生之日起就将"安全"写入品牌基因，真正兑现了"安全是一切的前提"的品牌承诺。由精英研发团队打造，符合国际最严苛的安全标准。
+                                </p>
+                                <p class="text-gray-700 leading-relaxed">
+                                    未来，画法几何品牌的研发不仅仅是鱼缸和智能硬件，还包括Ai、大数据、云计算、开源领域等技术。在欧盟、北美和亚洲多地建立研发中心，并在产品、技术、人才等方面实现全球化协同发展，画法几何品牌已经制定了全球化战略推进日程，计划于2021年进入欧洲市场，2022年进入北美市场，并向全球其他市场拓展，成为全球领先的智能鱼缸品牌，完成从源自中国到代表中国的重大突破。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="md:w-3/5 order-1 md:order-2">
+                            <div class="relative group perspective-1000 mx-auto max-w-lg">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-brand-primary/20 to-brand-secondary/10 rounded-2xl transform -rotate-2 shadow-lg group-hover:shadow-xl transition-all duration-500"></div>
+                                <!-- 替换为本地图片或使用占位图 -->
+                                <div class="relative z-10 rounded-2xl shadow-md w-full h-80 placeholder-image transform rotate-1 group-hover:rotate-0 transition-all duration-700">
+                                    <span>全球化战略形象图</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 战略布局部分 - 网格卡片设计 -->
+            <div class="mb-20">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">画法几何全球战略</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                    <!-- 全球布局战略卡片 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                        <div class="p-8">
+                            <!-- 图标部分 -->
+                            <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            
+                            <!-- 内容部分 -->
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">全球化布局</h3>
+                            <p class="text-gray-600 mb-6">画法几何致力于在欧盟、北美和亚洲多地建立研发中心和销售网络，实现全球化协同发展，将中国智造推向世界舞台。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 创新战略卡片 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                        <div class="p-8">
+                            <!-- 图标部分 -->
+                            <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                </svg>
+                            </div>
+                            
+                            <!-- 内容部分 -->
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">技术创新</h3>
+                            <p class="text-gray-600 mb-6">画法几何不断探索鱼缸技术创新，将AI、大数据、云计算等前沿技术融入智能鱼缸，引领行业发展方向。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 专注战略卡片 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                        <div class="p-8">
+                            <!-- 图标部分 -->
+                            <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            
+                            <!-- 内容部分 -->
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">安全至上</h3>
+                            <p class="text-gray-600 mb-6">画法几何将"安全"写入品牌基因，坚持"安全是一切的前提"的品牌承诺，所有产品均符合国际最严苛的安全标准。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 隐私战略卡片 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                        <div class="p-8">
+                            <!-- 图标部分 -->
+                            <div class="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            </div>
+                            
+                            <!-- 内容部分 -->
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">生态协同</h3>
+                            <p class="text-gray-600 mb-6">画法几何致力于构建全球水族生态系统，通过开放平台与合作伙伴共同打造智能鱼缸产业新生态。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 高管团队 -->
+            <div class="mb-20">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">高管团队</h2>
+                <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+                    画法几何品牌通过全球人才引进计划，汇聚国内外多名专家，以及曾在华为、德信、小米等一级零部件供应商以及科技创新公司工作过的尖端人才。
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <!-- 研发团队卡片 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                        <div class="p-8">
+                            <!-- 图标部分 -->
+                            <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                            </div>
+                            
+                            <!-- 内容部分 -->
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">研发团队</h3>
+                            <p class="text-gray-600">由来自全球顶尖大学和科技公司的专家组成，专注于智能鱼缸技术的突破和创新。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 产品团队卡片 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                        <div class="p-8">
+                            <!-- 图标部分 -->
+                            <div class="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            
+                            <!-- 内容部分 -->
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">产品团队</h3>
+                            <p class="text-gray-600">深入了解用户需求，结合前沿技术和设计理念，打造兼具美观和功能性的智能鱼缸产品。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 市场团队卡片 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                        <div class="p-8">
+                            <!-- 图标部分 -->
+                            <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            
+                            <!-- 内容部分 -->
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">市场团队</h3>
+                            <p class="text-gray-600">具有全球化视野，负责制定和执行画法几何的全球市场战略，推动品牌国际化发展。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 品牌成就与未来规划 -->
+            <div class="mb-20">
+                <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">品牌成就与未来规划</h2>
+                
+                <!-- 成就统计数据 -->
+                <div class="bg-gray-50 rounded-3xl p-12 mb-16">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        <div class="text-center">
+                            <div class="text-5xl font-bold text-red-600 mb-2 flex items-center justify-center">
+                                <span class="counter" data-target="35">0</span>
+                                <span>+</span>
+                            </div>
+                            <p class="text-gray-600">全球专利</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl font-bold text-red-600 mb-2 flex items-center justify-center">
+                                <span class="counter" data-target="20">0</span>
+                                <span>+</span>
+                            </div>
+                            <p class="text-gray-600">国家与地区</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl font-bold text-red-600 mb-2 flex items-center justify-center">
+                                <span class="counter" data-target="200">0</span>
+                                <span>k+</span>
+                            </div>
+                            <p class="text-gray-600">全球用户</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl font-bold text-red-600 mb-2 flex items-center justify-center">
+                                <span class="counter" data-target="95">0</span>
+                                <span>%</span>
+                            </div>
+                            <p class="text-gray-600">客户满意度</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 未来规划时间轴 -->
+                <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">五年发展规划</h3>
+                <div class="relative">
+                    <!-- 中心线 -->
+                    <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-red-100 rounded"></div>
+                    
+                    <!-- 2024年计划 -->
+                    <div class="relative mb-20">
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0">
+                                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-600">
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">2024: 欧洲市场拓展</h4>
+                                    <p class="text-gray-600 mb-4">完成欧洲区域总部的建设，通过高端设计与先进技术打入欧洲高端市场。与欧洲设计师合作，推出符合欧洲审美与安全标准的新产品线。</p>
+                                    <div class="flex space-x-2">
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">高端市场</span>
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">欧洲设计</span>
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">区域总部</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-center z-10">
+                                <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-lg">
+                                    24
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 md:pl-12 mt-6 md:mt-0 hidden md:block"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2025年计划 -->
+                    <div class="relative mb-20">
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 hidden md:block"></div>
+                            <div class="flex items-center justify-center z-10">
+                                <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-lg">
+                                    25
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 md:pl-12 mt-6 md:mt-0">
+                                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-600">
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">2025: 北美战略推进</h4>
+                                    <p class="text-gray-600 mb-4">在美国硅谷设立技术创新中心，与北美科技巨头达成战略合作，开发下一代AI智能鱼缸系统。将高端产品线引入美国高端零售渠道。</p>
+                                    <div class="flex space-x-2">
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">硅谷研发</span>
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">AI系统</span>
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">零售渠道</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2026年计划 -->
+                    <div class="relative mb-20">
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0">
+                                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-600">
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">2026: 全球物联网生态</h4>
+                                    <p class="text-gray-600 mb-4">完成全球鱼缸物联网平台建设，实现全球用户数据互联互通。发布开放API，吸引全球开发者参与生态建设。实现与主流智能家居系统的无缝集成。</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">物联网平台</span>
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">开发者生态</span>
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">智能家居</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-center z-10">
+                                <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-lg">
+                                    26
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 md:pl-12 mt-6 md:mt-0 hidden md:block"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2027年计划 -->
+                    <div class="relative mb-20">
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 hidden md:block"></div>
+                            <div class="flex items-center justify-center z-10">
+                                <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-lg">
+                                    27
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 md:pl-12 mt-6 md:mt-0">
+                                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-600">
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">2027: 全球行业标准制定</h4>
+                                    <p class="text-gray-600 mb-4">主导智能鱼缸行业全球标准制定，召开首届全球智能水族行业峰会。将公司核心技术标准推广为行业标准，确立全球领导地位。</p>
+                                    <div class="flex space-x-2">
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">行业标准</span>
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">全球峰会</span>
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">领导地位</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2028年计划 -->
+                    <div class="relative">
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0">
+                                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-600">
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">2028: 全球领导者愿景实现</h4>
+                                    <p class="text-gray-600 mb-4">实现"全球智能鱼缸引领者"愿景，在全球主要市场占有率达到35%以上。打造完整的智能水族生态系统，涵盖硬件、软件、服务和内容的全生态体系。</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">全球领导</span>
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">35%市场份额</span>
+                                        <span class="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">全生态体系</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-center z-10">
+                                <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-lg">
+                                    28
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 md:pl-12 mt-6 md:mt-0 hidden md:block"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 结语部分 -->
+            <div class="bg-gray-50 rounded-3xl p-12 mb-20 text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">从中国走向世界，引领行业新未来</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">画法几何始于中国，成长于中国，但我们的视野始终面向全球。随着我们品牌战略的不断推进，我们将持续以创新的产品、先进的技术和卓越的服务，引领全球智能鱼缸行业的发展，为全球用户带来更安全、更智能、更美好的水族生活体验。</p>
+                <a href="#" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105">加入我们的全球事业</a>
+            </div>
+            
+            <!-- 添加数字计数器动画脚本 -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const counters = document.querySelectorAll('.counter');
+                    const speed = 200; // 数字增长的速度
+                    
+                    counters.forEach(counter => {
+                        const updateCount = () => {
+                            const target = +counter.getAttribute('data-target');
+                            const count = +counter.innerText;
+                            const increment = target / speed;
+                            
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count + increment);
+                                setTimeout(updateCount, 1);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        
+                        updateCount();
+                    });
+                });
+            </script>
+        </div>
+    </section>
+
+    <!-- 页脚 Footer -->
+    <footer class="bg-tech-gray text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- 页脚主体内容 -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <!-- 关于我们栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">关于我们</h3>
+                    <ul class="space-y-2">
+                        <li><a href="brand-introduction.html" class="text-gray-300 hover:text-white transition-colors duration-200">品牌介绍</a></li>
+                        <li><a href="brand-strategy.html" class="text-white transition-colors duration-200">品牌战略</a></li>
+                        <li><a href="milestones.html" class="text-gray-300 hover:text-white transition-colors duration-200">大事件</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 产品中心栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">产品中心</h3>
+                    <ul class="space-y-2">
+                        <li><a href="products.html" class="text-gray-300 hover:text-white transition-colors duration-200">C系智能鱼缸</a></li>
+                        <li><a href="products.html#s-series" class="text-gray-300 hover:text-white transition-colors duration-200">S系智能鱼缸</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 新闻动态栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">新闻动态</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">品牌资讯</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">行业新闻</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 加入我们栏目 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">加入我们</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">经销商招募</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">人才招聘</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 二维码区域 -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold mb-4">关注我们</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- 微信公众号 -->
+                        <div class="text-center">
+                            <div class="p-2 bg-white rounded-md inline-block mb-2">
+                                <!-- 替换为本地图片或使用占位图 -->
+                                <div class="w-24 h-24 placeholder-image text-xs">
+                                    <span>微信二维码</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400">微信公众号</p>
+                        </div>
+                        
+                        <!-- 官方微博 -->
+                        <div class="text-center">
+                            <div class="p-2 bg-white rounded-md inline-block mb-2">
+                                <!-- 替换为本地图片或使用占位图 -->
+                                <div class="w-24 h-24 placeholder-image text-xs">
+                                    <span>微博二维码</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400">官方微博</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 版权信息 -->
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center">
+                <div class="text-gray-400 text-sm">
+                    版权所有：北京元苡佰科技有限责任公司 Copyright © 2023 desgeo.com All Rights Reserved. 京ICP备15055609号-4
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 返回顶部按钮 -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <a href="#" class="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-lg text-tech-gray hover:text-tech-light transition-colors duration-200">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+</body>
+</html>
